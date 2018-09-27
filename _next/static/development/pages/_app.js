@@ -75,6 +75,19 @@ function tickClock(isServer) {
 
 /***/ }),
 
+/***/ "../global.config.js":
+/*!***************************!*\
+  !*** ../global.config.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var config = {};
+config.lang = ['en', 'de'];
+module.exports = config;
+
+/***/ }),
+
 /***/ "../i18n.js":
 /*!******************!*\
   !*** ../i18n.js ***!
@@ -88,10 +101,12 @@ var XHR = __webpack_require__(/*! i18next-xhr-backend */ "../node_modules/i18nex
 
 var LanguageDetector = __webpack_require__(/*! i18next-browser-languagedetector */ "../node_modules/i18next-browser-languagedetector/index.js");
 
-var lang = ['en', 'de'];
+var config = __webpack_require__(/*! ./global.config.js */ "../global.config.js"); // const lang = ['en', 'de']
+
+
 var options = {
-  fallbackLng: lang[0],
-  preload: lang,
+  fallbackLng: config.lang[0],
+  preload: config.lang,
   // preload all langages
   load: 'languageOnly',
   // we only provide en, de -> no region specific locals like en-US, de-DE
