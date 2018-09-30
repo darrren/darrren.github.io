@@ -1,3 +1,25 @@
 {
-  "title": "title"
+  "title": "title",
+  "intro": "intro",
+  "skill": "skill",
+  "skill_0": "skill_0",
+  "subTitle_1": "subTitle_1",
+  "skill_1": "skill_1",
+  "skill_2": "skill_2",
+  "skill_3": "skill_3",
+  "skill_4": "skill_4",
+  "skill_5": "skill_5",
+  "skill_6": "skill_6",
+  "skill_7": "skill_7",
+  "skill_8": "skill_8",
+  "skill_9": "skill_9",
+  "skill_10": "skill_10",
+  "skill_11": "skill_11",
+  "subTitle_2": "subTitle_2",
+  "exp_3": "exp_3",
+  "exp_3_pos": "exp_3_pos",
+  "exp_2": "exp_2",
+  "exp_2_pos": "exp_2_pos",
+  "exp_1": "exp_1",
+  "exp_1_pos": "exp_1_pos"
 }

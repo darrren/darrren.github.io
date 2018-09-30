@@ -1,3 +1,23 @@
 {
-    "title": "About Us"
+    "title": "About Us",
+    "intro": "My name is Darren Chan, a Front-End Developer, has worked for over 7 years in web development. I’m an open-mind fast learner. I could pick up a latest technology in a short time. I am a proficient in Frontend technologies with compatible cross browsers and different platforms. I has better to resolving problem for various projects with my web knowledge.<br /><br />My job duty is using a html, jquery and css to development a Campaign site and corporate site. I interesting in web development and develop some interactive website to the end user.",
+    "subTitle_1": "Technical Skills",
+    "skill_1": "HTML / HTML5",
+    "skill_2": "CSS / CSS3",
+    "skill_3": "Javascript / jQuery",
+    "skill_4": "Ajax",
+    "skill_5": "Bootstrap",
+    "skill_6": "TweenMax",
+    "skill_7": "ReactJS",
+    "skill_8": "AngularJS",
+    "skill_9": "Gulp",
+    "skill_10": "Photoshop",
+    "skill_11": "AI",
+    "subTitle_2": "Experience",
+    "exp_3": "<small>December 2016</small> - <span class='highlight'>Present</span>",
+    "exp_3_pos": "Accenture Ltd. - Senior Web Developer",
+    "exp_2": "<small>April 2013 - December 2016</small>",
+    "exp_2_pos": "Pixo Punch Ltd. - Web Developer",
+    "exp_1": "October 2011 - April 2013",
+    "exp_1_pos": "Pixo Punch Ltd. - Junior Web Developer"
 }

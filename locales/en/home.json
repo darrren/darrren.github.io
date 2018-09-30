@@ -1,3 +1,5 @@
 {
-  "welcome": "Welcome"
+  "welcome": "Welcome",
+  "h2": "My name is D<small>arren</small> C<small>han</small>",
+  "h3": "A Front-End Web Developer"
 }
