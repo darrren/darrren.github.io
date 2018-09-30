@@ -21641,7 +21641,7 @@ function (_React$Component) {
     _classCallCheck(this, About);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(About).call(this, props));
-    _this.delay = 1;
+    _this.delay = 0.4;
     return _this;
   }
 
@@ -21728,9 +21728,11 @@ function (_React$Component) {
         autoAlpha: 1,
         delay: this.delay + 0.3,
         ease: gsap__WEBPACK_IMPORTED_MODULE_4__["Power3"].easeOut
-      }, 0.05, function () {
-        _this3.progressBarAnimte();
+      }, 0.05, function () {// this.progressBarAnimte()
       });
+      setTimeout(function () {
+        _this3.progressBarAnimte();
+      }, 1100);
     }
   }, {
     key: "render",
@@ -21964,9 +21966,9 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("small", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, "0%")))))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "col-12 col-md-5 offset-md-1 item"
       })))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        className: "row pb-5 fade"
+        className: "row pb-md-5 fade"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        className: "experience pb-5 col-12 col-md-6 col-lg-5"
+        className: "experience pb-md-5 col-12 col-md-6 col-lg-5"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", {
         className: "mb-2 title font-nixieone"
       }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("strong", null, t('subTitle_2'))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", {

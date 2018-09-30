@@ -21548,7 +21548,7 @@ function (_React$Component) {
     _this.draw = _this.draw.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.hexToRgb = _this.hexToRgb.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.numParticles = null;
-    _this.bg = [26, 29, 36]; // this.cols = ['#FF9800']
+    _this.bg = _this.hexToRgb('#1a1d24'); // this.cols = ['#FF9800']
     // this.cols = ['#5fe4e2']
 
     _this.cols = _this.hexToRgb('#5fe4e2');
@@ -21558,7 +21558,7 @@ function (_React$Component) {
   _createClass(Fireflies, [{
     key: "init",
     value: function init() {
-      this.numParticles = Math.round(window.innerWidth * 0.02);
+      this.numParticles = Math.round(window.innerWidth * 0.025);
 
       window.requestAnimFrame = function (callback) {
         return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) {
@@ -21593,7 +21593,7 @@ function (_React$Component) {
       this.canvas.height = this.canvas2.height = window.innerHeight;
       this.ctx.beginPath();
       this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
-      this.ctx.fillStyle = "rgba(".concat(this.bg[0], ", ").concat(this.bg[1], ", ").concat(this.bg[2], ", ", 1, ")");
+      this.ctx.fillStyle = "rgba(".concat(this.bg.r, ", ").concat(this.bg.g, ", ").concat(this.bg.b, ", ", 1, ")");
       this.ctx.fill();
     }
   }, {
@@ -21601,7 +21601,7 @@ function (_React$Component) {
     value: function fade(amt) {
       this.ctx.beginPath();
       this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
-      this.ctx.fillStyle = "rgba(".concat(this.bg[0], ", ").concat(this.bg[1], ", ").concat(this.bg[2], ", ").concat(amt, ")");
+      this.ctx.fillStyle = "rgba(".concat(this.bg.r, ", ").concat(this.bg.g, ", ").concat(this.bg.b, ", ").concat(amt, ")");
       this.ctx.fill();
     }
   }, {
@@ -21712,6 +21712,7 @@ var Particle = function Particle(canvas, ctx, ctx2, color) {
   this.history = [];
   this.historyMaxLen = 5;
   this.windowOffset = 50;
+  this.coolDown = 100;
 
   this.update = function () {
     /// ///////////////////////////////////
@@ -21751,16 +21752,24 @@ var Particle = function Particle(canvas, ctx, ctx2, color) {
     // this.vy = this.vy * 0.9 + (canvas.height/2 - this.pos.y ) * 0.002
     // }
 
-    if (_this.alpha >= 1) {
+    if (_this.alpha >= 1 && _this.coolDown >= 100) {
       _this.alphaType = 'fadeout';
-    } else if (_this.alpha <= 0) {
+    } else if (_this.alpha <= 0 && _this.coolDown <= 0) {
       _this.alphaType = 'fadein';
     }
 
     if (_this.alphaType === 'fadeout') {
       _this.alpha = Math.max(_this.alpha -= _this.alphaStep, 0);
+
+      if (_this.alpha == 0) {
+        _this.coolDown--;
+      }
     } else if (_this.alphaType === 'fadein') {
       _this.alpha = Math.min(_this.alpha += _this.alphaStep, 1);
+
+      if (_this.alpha == 1) {
+        _this.coolDown++;
+      }
     } /// ///////////////////////////////////
 
 
@@ -22042,7 +22051,6 @@ function (_React$Component) {
           delay: 1.2
         }, 0.1);
       });
-      console.log(this.props.t('welcome'));
     }
   }, {
     key: "render",

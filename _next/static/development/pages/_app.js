@@ -35969,6 +35969,7 @@ var nextRoutes = __webpack_require__(/*! next-routes */ "../node_modules/next-ro
 var routes = module.exports = nextRoutes();
 routes.add('blog', '/blog/:slug');
 routes.add('about', '/:lng/about');
+routes.add('works', '/:lng/works');
 
 /***/ }),
 
@@ -36175,24 +36176,24 @@ var ActiveLink = function ActiveLink(_ref) {
   var children = _ref.children,
       router = _ref.router,
       href = _ref.href,
+      route = _ref.route,
+      as = _ref.as,
       params = _ref.params;
-  var active = router.pathname.replace('/', '') === href.replace('/', '');
-  var className = active ? 'active-link' : 'inactive-link';
-  console.log(router.pathname);
-  console.log(router.pathname.replace('/', ''));
-  console.log(href.replace('/', ''));
-  console.log(className); //   const style = {
-  //     marginRight: 10,
-  //     color: router.pathname === href ? 'red' : 'black'
-  //   }
-  //   const handleClick = (e) => {
-  //     e.preventDefault()
-  //     router.push(href)
-  //   }
+  var new_path = href ? router.asPath : router.pathname;
+  var new_href = as ? href + as : href;
+  var active = new_path.replace(/[\/]/g, '') === (new_href ? new_href.replace(/[\/]/g, '') : route.replace(/[\/]/g, ''));
+  var className = active ? 'active-link' : 'inactive-link'; // console.log(router)
+  // console.log(new_path, new_href)
+  // if (new_href) { console.log(new_path.replace(/[\/]/g, ''), new_href.replace(/[\/]/g, '')) }
+  // if (route) { console.log(router.asPath.replace(/[\/]/g, ''), route.replace(/[\/]/g, '')) }
+  //   console.log(className)
+  // console.log(as)
 
   return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_routes__WEBPACK_IMPORTED_MODULE_2__["Link"], {
     prefetch: true,
-    route: href,
+    href: href,
+    route: route,
+    as: as,
     params: params
   }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
     className: className
@@ -36627,6 +36628,7 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Nav).call(this, props));
     _this.menuBg = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.menuContent = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
+    _this.closeBtn = react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
     _this.toggleMenu = _this.toggleMenu.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.state = {
       isOpen: false
@@ -36645,7 +36647,7 @@ function (_React$Component) {
           overflow: 'hidden'
         });
         var windowSize = window.innerWidth > window.innerHeight ? window.innerWidth : window.innerHeight;
-        var radio = 1.4;
+        var radio = 1.45;
         gsap__WEBPACK_IMPORTED_MODULE_2__["TweenMax"].to(this.menuBg.current.childNodes[0], 0.6, {
           width: windowSize * radio,
           height: windowSize * radio,
@@ -36682,6 +36684,17 @@ function (_React$Component) {
           delay: 0.3,
           ease: gsap__WEBPACK_IMPORTED_MODULE_2__["Power4"].out
         }, 0.1);
+        gsap__WEBPACK_IMPORTED_MODULE_2__["TweenMax"].set(this.closeBtn.current, {
+          y: -10,
+          display: 'block',
+          autoAlpha: 0
+        });
+        gsap__WEBPACK_IMPORTED_MODULE_2__["TweenMax"].to(this.closeBtn.current, 0.7, {
+          y: 0,
+          autoAlpha: 1,
+          delay: 1.3,
+          ease: gsap__WEBPACK_IMPORTED_MODULE_2__["Power4"].out
+        });
       } else {
         this.setState({
           isOpen: false
@@ -36691,7 +36704,8 @@ function (_React$Component) {
         });
         gsap__WEBPACK_IMPORTED_MODULE_2__["TweenMax"].to(this.menuContent.current, 0.2, {
           display: 'none',
-          autoAlpha: 0
+          autoAlpha: 0,
+          ease: gsap__WEBPACK_IMPORTED_MODULE_2__["Expo"].out
         });
         gsap__WEBPACK_IMPORTED_MODULE_2__["TweenMax"].to(this.menuBg.current.childNodes[0], 0.4, {
           width: 0,
@@ -36709,6 +36723,11 @@ function (_React$Component) {
           width: 0,
           height: 0,
           delay: 0.1,
+          ease: gsap__WEBPACK_IMPORTED_MODULE_2__["Expo"].out
+        });
+        gsap__WEBPACK_IMPORTED_MODULE_2__["TweenMax"].to(this.closeBtn.current, 0.4, {
+          display: 'none',
+          autoAlpha: 0,
           ease: gsap__WEBPACK_IMPORTED_MODULE_2__["Expo"].out
         });
       }
@@ -36742,6 +36761,10 @@ function (_React$Component) {
           gsap__WEBPACK_IMPORTED_MODULE_2__["TweenMax"].set(_this2.menuContent.current, {
             display: 'block',
             autoAlpha: 1
+          });
+          gsap__WEBPACK_IMPORTED_MODULE_2__["TweenMax"].set(_this2.closeBtn.current, {
+            display: 'none',
+            autoAlpha: 0
           });
         } else {
           if (!_this2.state.isOpen) {
@@ -36784,6 +36807,10 @@ function (_React$Component) {
                 display: 'none',
                 autoAlpha: 0
               });
+              gsap__WEBPACK_IMPORTED_MODULE_2__["TweenMax"].set(_this2.closeBtn.current, {
+                display: 'none',
+                autoAlpha: 0
+              });
             }, 500);
           }
         }, false);
@@ -36807,23 +36834,25 @@ function (_React$Component) {
         className: "menuContent",
         ref: this.menuContent
       }, i18n.language ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_activeLink__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        prefetch: true,
         href: "/"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: _static_ico_home_png__WEBPACK_IMPORTED_MODULE_7___default.a
+      }), t('nav_home'))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_activeLink__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        href: "/",
+        as: "/page2"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+        src: _static_ico_home_png__WEBPACK_IMPORTED_MODULE_7___default.a
       }), t('nav_home'))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, ' / '), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_activeLink__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        prefetch: true,
-        href: "about",
+        route: "about",
         params: {
           lng: i18n.language
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: _static_ico_about_png__WEBPACK_IMPORTED_MODULE_8___default.a
       }), t('nav_about'))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, ' / '), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_activeLink__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        prefetch: true,
-        href: "blog",
+        route: "works",
         params: {
-          slug: 'hello-world'
+          lng: i18n.language
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
         src: _static_ico_work_png__WEBPACK_IMPORTED_MODULE_9___default.a
@@ -36833,6 +36862,7 @@ function (_React$Component) {
         src: _static_ico_contact_png__WEBPACK_IMPORTED_MODULE_10___default.a
       }), t('nav_contact')))) : ''), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "closeBtn",
+        ref: this.closeBtn,
         onClick: this.toggleMenu
       }, "close"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "copyright"
@@ -36851,7 +36881,7 @@ _defineProperty(Nav, "propTypes", {
 var Navigation = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].nav.withConfig({
   displayName: "nav__Navigation",
   componentId: "sc-1hk9i97-0"
-})(["z-index:1;.menuContainer{position:fixed;bottom:0;left:0;width:100%;min-height:46px;background-color:rgba(0,0,0,0.5);z-index:1;font-size:12px;.burger{display:none;position:absolute;top:0;left:0;width:70px;height:60px;padding:10px 15px;z-index:1;span{display:block;width:100%;height:4px;background-color:rgba(255,255,255,1);border-radius:3px;margin-top:7px;}}.closeBtn{display:none;position:absolute;bottom:0;right:0;color:#000;z-index:1;}.menuBg{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;div{position:absolute;top:0;left:0;background-color:#e45fc0;border-bottom-right-radius:100%;z-index:1;div{position:absolute;top:0;left:0;background-color:#5fe4e2;border-bottom-right-radius:100%;div{position:absolute;top:0;left:0;background-color:#fff;border-bottom-right-radius:100%;}}}}.menuContent{position:relative;float:right;color:#9d9d9d;z-index:1;a{position:relative;display:inline-block;color:#9d9d9d;text-decoration:none;padding:14px 20px;span{position:relative;display:inline-block;padding:0 0 0 20px;transition:0.5s;img{opacity:0.5;position:absolute;top:50%;left:0;-webkit-transform:translate(0,-50%);-moz-transform:translate(0,-50%);-o-transform:translate(0,-50%);-ms-transform:translate(0,-50%);transform:translate(0,-50%);transition:0.5s;}}}}.copyright{float:left;color:#fff;padding:14px 0;}}@media (min-width:769px){.menuContainer{.menuContent{a{&:hover{color:#fff;span{img{opacity:1;}}}&.active-link{color:#fff;font-weight:bold;&:before{content:'';position:absolute;top:0;left:20px;width:calc(100% - 40px);border-top:3px solid #5fe4e2;}img{opacity:1;}}}}}}@media (max-width:768px){.menuContainer{position:static;text-align:center;top:0;bottom:inherit;font-size:30px;background:none;min-height:auto;.burger{display:block;}.closeBtn{display:block;}.menuContent{display:none;float:none;opacity:0;position:absolute;top:50%;left:0;width:100%;transform:translate(0,-50%);a{display:block;padding-top:30px;padding-bottom:30px;&:active{color:#1a1d24;}span{transition:0.3s;img{display:none;}}}span{display:none;}}.copyright{display:none;float:none;padding-top:0;}}}"]);
+})(["z-index:1;.menuContainer{position:fixed;bottom:0;left:0;width:100%;min-height:46px;background-color:rgba(0,0,0,0.5);z-index:1;font-size:12px;.burger{display:none;position:absolute;top:0;left:0;width:60px;height:50px;padding:10px 15px;z-index:1;span{display:block;width:100%;height:3px;background-color:rgba(255,255,255,1);border-radius:3px;margin-top:6px;}}.closeBtn{display:none;position:absolute;bottom:0;left:50%;transform:translate(-50%,0);color:#000;opacity:0;z-index:1;}.menuBg{position:absolute;top:0;left:0;width:100%;height:100%;overflow:hidden;div{position:absolute;top:0;left:0;background-color:#e45fc0;border-bottom-right-radius:100%;z-index:1;div{position:absolute;top:0;left:0;background-color:#5fe4e2;border-bottom-right-radius:100%;div{position:absolute;top:0;left:0;background-color:#fff;border-bottom-right-radius:100%;}}}}.menuContent{position:relative;float:right;color:#9d9d9d;z-index:1;a{position:relative;display:inline-block;color:#9d9d9d;text-decoration:none;padding:14px 20px;span{position:relative;display:inline-block;padding:0 0 0 20px;transition:0.5s;img{opacity:0.5;position:absolute;top:50%;left:0;-webkit-transform:translate(0,-50%);-moz-transform:translate(0,-50%);-o-transform:translate(0,-50%);-ms-transform:translate(0,-50%);transform:translate(0,-50%);transition:0.5s;}}}}.copyright{float:left;color:#fff;padding:14px 0;}}@media (min-width:769px){.menuContainer{.menuContent{a{&:hover{color:#fff;span{img{opacity:1;}}}&.active-link{color:#fff;font-weight:bold;&:before{content:'';position:absolute;top:0;left:20px;width:calc(100% - 40px);border-top:3px solid #5fe4e2;}img{opacity:1;}}}}}}@media (max-width:768px){.menuContainer{position:static;text-align:center;top:0;bottom:inherit;font-size:30px;background:none;min-height:auto;.burger{display:block;}.closeBtn{}.menuContent{display:none;float:none;opacity:0;position:absolute;top:50%;left:0;width:100%;transform:translate(0,-50%);a{display:block;padding-top:20px;padding-bottom:20px;&:active{color:#1a1d24;}span{transition:0.3s;padding-left:0;img{display:none;}}}span{display:none;}}.copyright{display:none;float:none;padding-top:0;}}}"]);
 /* harmony default export */ __webpack_exports__["default"] = (Object(_lib_withI18next__WEBPACK_IMPORTED_MODULE_6__["withI18next"])(['common'])(Nav));
 
 /***/ }),
@@ -37233,7 +37263,6 @@ function (_App) {
   _createClass(MyApp, [{
     key: "checkIsMobile",
     value: function checkIsMobile() {
-      console.log('1');
       this.setState({
         isMobile: window.innerWidth < 768
       });
@@ -37241,6 +37270,7 @@ function (_App) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
+      this.checkIsMobile();
       window.addEventListener('resize', this.checkIsMobile);
     }
   }, {
